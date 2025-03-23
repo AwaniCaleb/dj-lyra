@@ -1,13 +1,593 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+	<title>DJ Lyra | Electronic Music Artist</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+	<script>
+		tailwind.config = {
+			darkMode: 'class',
+			theme: {
+				extend: {
+					colors: {
+						primary: '#ff3366',
+						secondary: '#ff66b2',
+						dark: '#121212',
+						darker: '#0a0a0a'
+					},
+					animation: {
+						'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+					}
+				}
+			}
+		}
+	</script>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap');
+
+		body {
+			font-family: 'Montserrat', sans-serif;
+			scroll-behavior: smooth;
+		}
+
+		.font-display {
+			font-family: 'Syncopate', sans-serif;
+		}
+
+		.music-player {
+			height: 60px;
+		}
+
+		.audio-player {
+			background: rgba(255, 51, 102, 0.1);
+			border-radius: 10px;
+		}
+
+		.progress-bar {
+			height: 4px;
+			background-color: rgba(255, 255, 255, 0.1);
+			cursor: pointer;
+		}
+
+		.progress {
+			height: 100%;
+			background-color: #ff3366;
+			width: 0%;
+		}
+
+		.equalizer {
+			display: flex;
+			align-items: flex-end;
+			height: 20px;
+			width: 20px;
+		}
+
+		.bar {
+			background-color: #ff3366;
+			width: 2px;
+			margin-right: 1px;
+			animation: equalize 1s infinite;
+		}
+
+		.bar:nth-child(1) {
+			animation-delay: 0.1s;
+			height: 40%;
+		}
+
+		.bar:nth-child(2) {
+			animation-delay: 0.2s;
+			height: 80%;
+		}
+
+		.bar:nth-child(3) {
+			animation-delay: 0.3s;
+			height: 60%;
+		}
+
+		.bar:nth-child(4) {
+			animation-delay: 0.4s;
+			height: 90%;
+		}
+
+		.bar:nth-child(5) {
+			animation-delay: 0.5s;
+			height: 40%;
+		}
+
+		@keyframes equalize {
+			0% {
+				height: 40%;
+			}
+
+			50% {
+				height: 100%;
+			}
+
+			100% {
+				height: 40%;
+			}
+		}
+
+		.gallery-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+			grid-auto-rows: 250px;
+			grid-gap: 15px;
+		}
+
+		.gallery-item {
+			overflow: hidden;
+			position: relative;
+			border-radius: 10px;
+			transition: all 0.3s ease;
+		}
+
+		.gallery-item:hover {
+			transform: scale(1.02);
+		}
+
+		.sound-wave {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 40px;
+			background: linear-gradient(to right,
+					rgba(255, 51, 102, 0.2) 0%,
+					rgba(255, 102, 178, 0.2) 50%,
+					rgba(255, 51, 102, 0.2) 100%);
+			clip-path: polygon(0% 100%, 4% 95%, 8% 85%, 12% 90%, 16% 95%, 20% 80%,
+					24% 70%, 28% 65%, 32% 80%, 36% 85%, 40% 75%, 44% 80%,
+					48% 75%, 52% 95%, 56% 85%, 60% 90%, 64% 80%, 68% 65%,
+					72% 75%, 76% 95%, 80% 80%, 84% 95%, 88% 85%, 92% 90%,
+					96% 95%, 100% 100%);
+		}
+	</style>
+
+	<script type="module" src="/src/main.js"></script>
+</head>
+
+<body class="bg-dark text-white transition-colors duration-300">
+	<!-- Navigation -->
+	<nav class="fixed w-full bg-black bg-opacity-80 backdrop-blur-md z-50">
+		<div class="container mx-auto px-6 py-4">
+			<div class="flex justify-between items-center">
+				<a href="#" class="text-primary font-display font-bold text-2xl">DJ LYRA</a>
+
+				<!-- Mobile Menu Button -->
+				<button class="md:hidden text-white focus:outline-none" id="menu-btn">
+					<i class="fas fa-bars text-xl"></i>
+				</button>
+
+				<!-- Desktop Navigation -->
+				<div class="hidden md:flex space-x-8">
+					<a href="#about" class="hover:text-primary transition-colors">About</a>
+					<!-- <a href="#music" class="hover:text-primary transition-colors">Music</a> -->
+					<a href="#gallery" class="hover:text-primary transition-colors">Gallery</a>
+					<a href="#events" class="hover:text-primary transition-colors">Events</a>
+					<a href="#booking" class="hover:text-primary transition-colors">Booking</a>
+					<a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+				</div>
+			</div>
+
+			<!-- Mobile Navigation -->
+			<div id="mobile-menu" class="md:hidden hidden pt-4 pb-2">
+				<div class="flex flex-col space-y-4">
+					<a href="#about" class="hover:text-primary transition-colors">About</a>
+					<!-- <a href="#music" class="hover:text-primary transition-colors">Music</a> -->
+					<a href="#gallery" class="hover:text-primary transition-colors">Gallery</a>
+					<a href="#events" class="hover:text-primary transition-colors">Events</a>
+					<a href="#booking" class="hover:text-primary transition-colors">Booking</a>
+					<a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Hero Section -->
+	<section class="relative h-screen bg-gradient-to-br from-dark to-black flex items-center justify-center overflow-hidden">
+		<div class="absolute inset-0 z-0">
+			<div class="sound-wave animate-pulse-slow"></div>
+		</div>
+		<div class="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
+		<div class="container mx-auto px-6 z-20 text-center">
+			<h1 class="font-display font-bold text-5xl sm:text-7xl md:text-8xl mb-6 tracking-wider">
+				<span class="text-white">DJ</span>
+				<span class="text-primary">LYRA</span>
+			</h1>
+			<p class="font-light text-xl md:text-2xl mb-10 max-w-xl mx-auto">
+				Electronic music artist pushing boundaries with hypnotic beats and immersive soundscapes.
+			</p>
+			<div class="flex flex-col sm:flex-row justify-center gap-4">
+				<!-- <a href="#music"
+					class="bg-primary hover:bg-opacity-80 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
+					Listen Now
+				</a> -->
+				<a href="#booking"
+					class="border border-primary text-primary hover:bg-primary hover:bg-opacity-10 font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
+					Book a Show
+				</a>
+			</div>
+		</div>
+		<div class="absolute bottom-10 left-0 right-0 text-center z-20">
+			<a href="#about" class="animate-bounce inline-block">
+				<i class="fas fa-chevron-down text-primary text-2xl"></i>
+			</a>
+		</div>
+	</section>
+
+	<!-- About Section -->
+	<section id="about" class="py-20 bg-darker">
+		<div class="container mx-auto px-6">
+			<div class="flex flex-col md:flex-row items-center gap-10">
+				<div class="md:w-1/2 justify-center">
+					<img src="/public/assets/images/about/1.jpg" alt="DJ Lyra" class="rounded-lg shadow-2xl transform -rotate-3 border-4 border-primary max-h-96" loading="lazy">
+				</div>
+				<div class="md:w-1/2">
+					<h2 class="font-display font-bold text-3xl md:text-4xl mb-6">
+						<span class="text-primary">ABOUT</span> LYRA
+					</h2>
+					<p class="mb-4">
+						Born in Port Harcourt, I found peace early on in radio shows and my humble MP3 player. My
+						passion for music grew as I embraced diverse sounds, especially the artistry of Nigerian
+						musicians.
+					</p>
+					<p class="mb-8">
+						My DJ journey began unexpectedly in my first year at university when a chance encounter with a
+						DJ set changed everything. With a mentor's help, I honed my skills and soon found myself playing
+						at parties and clubs.
+					</p>
+					<p class="mb-8">
+						I blend global trends with Amapiano and Afrobeats to create unforgettable moments on any stage.
+						For me, DJing isn't just about music—it's about spreading joy and connecting with my audience.
+					</p>
+					<div class="flex flex-wrap gap-3">
+						<span class="bg-primary bg-opacity-20 text-primary px-4 py-1 rounded-full text-sm">R&B</span>
+						<span class="bg-primary bg-opacity-20 text-primary px-4 py-1 rounded-full text-sm">House</span>
+						<span
+							class="bg-primary bg-opacity-20 text-primary px-4 py-1 rounded-full text-sm">Amapiano</span>
+						<span
+							class="bg-primary bg-opacity-20 text-primary px-4 py-1 rounded-full text-sm">Electronic</span>
+						<span
+							class="bg-primary bg-opacity-20 text-primary px-4 py-1 rounded-full text-sm">Progressive</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Music Section -->
+	<section id="music" class="hidden py-20 bg-dark">
+		<div class="container mx-auto px-6">
+			<h2 class="font-display font-bold text-3xl md:text-4xl mb-10 text-center">
+				<span class="text-primary">LATEST</span> TRACKS
+			</h2>
+			<!-- This container will be filled with track cards dynamically -->
+			<div id="music-tracks" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			</div>
+			<!-- Static link remains if needed -->
+			<div class="mt-12 text-center">
+				<a href="https://soundcloud.com" target="_blank"
+					class="inline-flex items-center text-primary hover:underline">
+					<span>More on SoundCloud</span>
+					<i class="fas fa-external-link-alt ml-2 text-sm"></i>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Gallery Section -->
+	<section id="gallery" class="py-20 bg-darker">
+		<div class="container mx-auto px-6">
+			<h2 class="font-display font-bold text-3xl md:text-4xl mb-10 text-center">
+				<span class="text-primary">PHOTO</span> GALLERY
+			</h2>
+			<!-- Container for dynamically injected gallery images -->
+			<div id="gallery-grid" class="gallery-grid">
+			</div>
+			<div class="mt-12 text-center">
+				<a href="https://instagram.com" target="_blank"
+					class="inline-flex items-center text-primary hover:underline">
+					<span>Follow on Instagram</span>
+					<i class="fas fa-external-link-alt ml-2 text-sm"></i>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Events Section -->
+	<section id="events" class="py-20 bg-dark">
+		<div class="container mx-auto px-6">
+			<h2 class="font-display font-bold text-3xl md:text-4xl mb-10 text-center">
+				<span class="text-primary">UPCOMING</span> SHOWS
+			</h2>
+			<!-- This container will be populated with event cards dynamically -->
+			<div id="events-list" class="space-y-6">
+			</div>
+		</div>
+	</section>
+
+	<!-- Booking Section -->
+	<section id="booking" class="py-20 bg-darker">
+		<div class="container mx-auto px-6">
+			<h2 class="font-display font-bold text-3xl md:text-4xl mb-10 text-center">
+				<span class="text-primary">BOOKING</span> INFORMATION
+			</h2>
+			<!-- Container for booking packages -->
+			<div id="booking-packages" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+			</div>
+			<!-- Container for custom quote text -->
+			<div id="booking-quote" class="text-center"></div>
+		</div>
+	</section>
+
+	<!-- Contact Section -->
+	<section id="contact" class="py-20 bg-dark">
+		<div class="container mx-auto px-6">
+			<h2 class="font-display font-bold text-3xl md:text-4xl mb-10 text-center">
+				<span class="text-primary">GET IN</span> TOUCH
+			</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+				<!-- Contact form remains static or can be adjusted as needed -->
+				<div>
+					<form class="space-y-6">
+						<div>
+							<label for="name" class="block text-sm font-medium mb-2">Name</label>
+							<input type="text" id="name"
+								class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:border-primary"
+								placeholder="Your name">
+						</div>
+						<div>
+							<label for="email" class="block text-sm font-medium mb-2">Email</label>
+							<input type="email" id="email"
+								class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:border-primary"
+								placeholder="your@email.com">
+						</div>
+						<div>
+							<label for="subject" class="block text-sm font-medium mb-2">Subject</label>
+							<select id="subject"
+								class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:border-primary">
+								<option value="" disabled selected>Select an option</option>
+								<option value="booking">Booking Inquiry</option>
+								<option value="collaboration">Collaboration</option>
+								<option value="press">Press/Media</option>
+								<option value="other">Other</option>
+							</select>
+						</div>
+						<div>
+							<label for="message" class="block text-sm font-medium mb-2">Message</label>
+							<textarea id="message" rows="5"
+								class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:border-primary"
+								placeholder="Your message..."></textarea>
+						</div>
+						<button type="submit"
+							class="w-full bg-primary hover:bg-opacity-80 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
+							Send Message
+						</button>
+					</form>
+				</div>
+				<!-- Dynamic contact details -->
+				<div>
+					<div id="contact-info"></div>
+					<div id="contact-social" class="mt-10 flex space-x-4"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Contact Section -->
+	<section id="contact-2" class="py-20 bg-dark hidden">
+		<div class="container mx-auto px-6">
+			<h2 class="font-display font-bold text-3xl md:text-4xl mb-10 text-center">
+				<span class="text-primary">GET IN</span> TOUCH
+			</h2>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+				<!-- Contact Form -->
+				<div>
+					<form class="space-y-6">
+						<div>
+							<label for="name" class="block text-sm font-medium mb-2">Name</label>
+							<input type="text" id="name"
+								class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:border-primary"
+								placeholder="Your name">
+						</div>
+
+						<div>
+							<label for="email" class="block text-sm font-medium mb-2">Email</label>
+							<input type="email" id="email"
+								class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:border-primary"
+								placeholder="your@email.com">
+						</div>
+
+						<div>
+							<label for="subject" class="block text-sm font-medium mb-2">Subject</label>
+							<select id="subject"
+								class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:border-primary">
+								<option value="" disabled selected>Select an option</option>
+								<option value="booking">Booking Inquiry</option>
+								<option value="collaboration">Collaboration</option>
+								<option value="press">Press/Media</option>
+								<option value="other">Other</option>
+							</select>
+						</div>
+
+						<div>
+							<label for="message" class="block text-sm font-medium mb-2">Message</label>
+							<textarea id="message" rows="5"
+								class="w-full px-4 py-3 bg-darker border border-gray-700 rounded-lg focus:outline-none focus:border-primary"
+								placeholder="Your message..."></textarea>
+						</div>
+
+						<button type="submit"
+							class="w-full bg-primary hover:bg-opacity-80 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
+							Send Message
+						</button>
+					</form>
+				</div>
+
+				<!-- Contact Info -->
+				<div class="flex flex-col justify-between">
+					<div>
+						<h3 class="text-xl font-bold mb-6">Contact Information</h3>
+
+						<div class="space-y-4">
+							<div class="flex items-start">
+								<div class="bg-primary bg-opacity-10 p-3 rounded-full mr-4">
+									<i class="fas fa-envelope text-primary"></i>
+								</div>
+								<div>
+									<h4 class="font-medium">Email</h4>
+									<p class="text-gray-300">bookings@djlyra.com</p>
+								</div>
+							</div>
+
+							<div class="flex items-start">
+								<div class="bg-primary bg-opacity-10 p-3 rounded-full mr-4">
+									<i class="fas fa-phone text-primary"></i>
+								</div>
+								<div>
+									<h4 class="font-medium">Management</h4>
+									<p class="text-gray-300">+1 (555) 123-4567</p>
+								</div>
+							</div>
+
+							<div class="flex items-start">
+								<div class="bg-primary bg-opacity-10 p-3 rounded-full mr-4">
+									<i class="fas fa-map-marker-alt text-primary"></i>
+								</div>
+								<div>
+									<h4 class="font-medium">Based In</h4>
+									<p class="text-gray-300">Los Angeles, California</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Social Media Links -->
+					<div class="mt-10">
+						<h3 class="text-xl font-bold mb-6">Follow Lyra</h3>
+
+						<div class="flex space-x-4">
+							<a href="https://instagram.com" target="_blank"
+								class="bg-primary bg-opacity-10 hover:bg-opacity-20 p-3 rounded-full transition-all">
+								<i class="fab fa-instagram text-primary text-xl"></i>
+							</a>
+							<a href="https://soundcloud.com" target="_blank"
+								class="bg-primary bg-opacity-10 hover:bg-opacity-20 p-3 rounded-full transition-all">
+								<i class="fab fa-soundcloud text-primary text-xl"></i>
+							</a>
+							<a href="https://twitter.com" target="_blank"
+								class="bg-primary bg-opacity-10 hover:bg-opacity-20 p-3 rounded-full transition-all">
+								<i class="fab fa-twitter text-primary text-xl"></i>
+							</a>
+							<a href="https://youtube.com" target="_blank"
+								class="bg-primary bg-opacity-10 hover:bg-opacity-20 p-3 rounded-full transition-all">
+								<i class="fab fa-youtube text-primary text-xl"></i>
+							</a>
+							<a href="https://spotify.com" target="_blank"
+								class="bg-primary bg-opacity-10 hover:bg-opacity-20 p-3 rounded-full transition-all">
+								<i class="fab fa-spotify text-primary text-xl"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer Section -->
+	<footer class="py-10 bg-black border-t border-gray-800">
+		<div class="container mx-auto px-6">
+			<!-- Main Footer Content -->
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+				<!-- Brand Column -->
+				<div class="md:col-span-1">
+					<a href="#" class="text-primary font-display font-bold text-2xl mb-4 inline-block">DJ LYRA</a>
+					<p class="text-gray-400 text-sm mb-4">Electronic music artist pushing boundaries with hypnotic beats
+						and immersive soundscapes.</p>
+					<div class="flex space-x-4">
+						<a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-primary">
+							<i class="fab fa-instagram"></i>
+						</a>
+						<a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-primary">
+							<i class="fab fa-twitter"></i>
+						</a>
+					</div>
+				</div>
+
+				<!-- Quick Links -->
+				<div class="md:col-span-1">
+					<h3 class="text-white font-bold mb-4">Quick Links</h3>
+					<ul class="space-y-2">
+						<li><a href="#about" class="text-gray-400 hover:text-primary">About</a></li>
+						<!-- <li><a href="#music" class="text-gray-400 hover:text-primary">Music</a></li> -->
+						<li><a href="#gallery" class="text-gray-400 hover:text-primary">Gallery</a></li>
+						<li><a href="#events" class="text-gray-400 hover:text-primary">Events</a></li>
+						<li><a href="#booking" class="text-gray-400 hover:text-primary">Booking</a></li>
+						<li><a href="#contact" class="text-gray-400 hover:text-primary">Contact</a></li>
+					</ul>
+				</div>
+
+				<!-- Latest Shows -->
+				<div class="md:col-span-1 hidden">
+					<h3 class="text-white font-bold mb-4">Latest Shows</h3>
+					<ul class="space-y-4">
+						<li class="flex items-center">
+							<div
+								class="w-12 h-12 bg-primary bg-opacity-20 flex items-center justify-center rounded mr-3">
+								<span class="text-primary font-bold">15</span>
+							</div>
+							<div>
+								<p class="text-white text-sm">Electric Dreams Festival</p>
+								<p class="text-gray-400 text-xs">New York</p>
+							</div>
+						</li>
+						<li class="flex items-center">
+							<div
+								class="w-12 h-12 bg-primary bg-opacity-20 flex items-center justify-center rounded mr-3">
+								<span class="text-primary font-bold">22</span>
+							</div>
+							<div>
+								<p class="text-white text-sm">Club Neon</p>
+								<p class="text-gray-400 text-xs">Los Angeles</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<!-- Newsletter -->
+				<div class="">
+					<h3 class="text-white font-bold mb-4">Newsletter</h3>
+					<p class="text-gray-400 text-sm mb-4">Subscribe to get updates on shows, releases, and exclusive
+						content.</p>
+					<p class="text-gray-400 text-sm">Coming Soon</p>
+					<form class="flex hidden">
+						<input type="email" placeholder="Your email"
+							class="px-4 py-2 bg-darker border border-gray-700 rounded-l-lg focus:outline-none focus:border-primary flex-grow">
+						<button type="submit" class="bg-primary hover:bg-opacity-80 text-white px-4 py-2 rounded-r-lg">
+							<i class="fas fa-paper-plane"></i>
+						</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- Bottom Footer -->
+			<div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+				<p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 DJ Lyra. All rights reserved.</p>
+
+				<div class="flex flex-wrap justify-center gap-4">
+					<!-- <a href="#" class="text-gray-400 hover:text-primary text-sm">Privacy Policy</a>
+					<a href="#" class="text-gray-400 hover:text-primary text-sm">Terms of Service</a>
+					<a href="#" class="text-gray-400 hover:text-primary text-sm">Cookie Policy</a> -->
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+
 </html>

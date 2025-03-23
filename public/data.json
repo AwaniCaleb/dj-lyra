@@ -1,0 +1,134 @@
+{
+  "hero": {
+    "title": "DJ LYRA",
+    "subtitle": "Electronic music artist pushing boundaries with hypnotic beats and immersive soundscapes."
+  },
+  "about": {
+    "heading": "ABOUT LYRA",
+    "description": "Born in Port Harcourt, I found peace early on in radio shows and my humble MP3 player. My passion for music grew as I embraced diverse sounds, especially the artistry of Nigerian musicians.\nMy DJ journey began unexpectedly in my first year at university when a chance encounter with a DJ set changed everything. With a mentor’s help, I honed my skills and soon found myself playing at parties and clubs.\nI blend global trends with Amapiano and Afrobeats to create unforgettable moments on any stage. For me, DJing isn’t just about music—it’s about spreading joy and connecting with my audience."
+  },
+  "music": {
+    "tracks": [
+      {
+        "name": "Neon Dreams",
+        "released": "February 2025"
+      },
+      {
+        "name": "Midnight Pulse",
+        "released": "January 2025"
+      },
+      {
+        "name": "Electric Horizon",
+        "released": "December 2024"
+      }
+    ]
+  },
+  "events": {
+    "list": [
+      {
+        "day": "15",
+        "month": "APR 2025",
+        "title": "Electric Dreams Festival",
+        "location": "Techno Arena, New York",
+        "description": "Headlining the main stage at New York's premier electronic music festival."
+      },
+      {
+        "day": "22",
+        "month": "MAY 2025",
+        "title": "Club Neon",
+        "location": "Club Neon, Los Angeles",
+        "description": "Exclusive DJ set at LA's hottest underground club venue."
+      },
+      {
+        "day": "10",
+        "month": "JUN 2025",
+        "title": "Pulse Festival",
+        "location": "Waterfront Park, Miami",
+        "description": "Special back-to-back set with top international DJs at Miami's summer festival."
+      }
+    ]
+  },
+  "gallery": {
+    "images": [
+      {
+        "src": "/public/assets/images/gallery/1.jpg",
+        "alt": "Gallery Image Here"
+      },
+      {
+        "src": "/public/assets/images/gallery/2.jpg",
+        "alt": "Gallery Image Here"
+      },
+      {
+        "src": "/public/assets/images/gallery/3.jpg",
+        "alt": "Gallery Image Here"
+      },
+      {
+        "src": "/public/assets/images/gallery/4.jpg",
+        "alt": "Gallery Image Here"
+      },
+      {
+        "src": "/public/assets/images/gallery/5.jpg",
+        "alt": "Gallery Image Here"
+      },
+      {
+        "src": "/public/assets/images/gallery/6.jpg",
+        "alt": "Gallery Image Here"
+      },
+      {
+        "src": "/public/assets/images/gallery/7.jpg",
+        "alt": "Gallery Image Here"
+      },
+      {
+        "src": "/public/assets/images/gallery/8.jpg",
+        "alt": "Gallery Image Here"
+      }
+    ]
+  },
+  "booking": {
+    "packages": [
+      {
+        "type": "Club Performance",
+        "price": "₦150,000",
+        "details": [
+          "2-hour DJ set",
+          "Standard lighting setup",
+          "Pre-event promotion on social",
+          "Perfect for small to medium venues"
+        ]
+      },
+      {
+        "type": "Festival Performance",
+        "price": "₦300,000",
+        "details": [
+          "90-minute headliner set",
+          "Custom visual show",
+          "Exclusive content for promotion",
+          "Meet & greet option",
+          "Perfect for festivals & large events"
+        ]
+      },
+      {
+        "type": "Private Event",
+        "price": "₦500,000",
+        "details": [
+          "3-hour customized set",
+          "Sound system included",
+          "Music tailored to your event",
+          "Perfect for weddings & corporate"
+        ]
+      }
+    ],
+    "customQuoteText": "Need something specific? Contact us for a custom quote tailored to your event needs."
+  },
+  "contact": {
+    "info": {
+      "email": "Unavailable",
+      "management": "Unavailable",
+      "location": "Port Harcourt, Nigeria"
+    },
+    "social": {
+      "instagram": "https://instagram.com",
+      "twitter": "https://twitter.com"
+    }
+  }
+}
