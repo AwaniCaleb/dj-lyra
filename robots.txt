@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://djlyra.vercel.app/sitemap.xml
