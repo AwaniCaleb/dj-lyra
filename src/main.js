@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				data.gallery.images.forEach(image => {
 					let galleryItem = document.createElement('div');
 					galleryItem.className = 'gallery-item';
-					galleryItem.innerHTML = `<img src="${image.src}" alt="${image.alt}" class="w-full h-full object-cover" loading="lazy" />`;
+					galleryItem.innerHTML = `<img src="${image.src}" alt="${image.alt}" class="w-full h-full object-cover bg-gray-800" loading="lazy" />`;
 					galleryContainer.appendChild(galleryItem);
 				});
 			} else {
